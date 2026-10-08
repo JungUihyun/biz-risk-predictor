@@ -107,7 +107,7 @@ npm run dev
 | [03 GitHub Student Pack 가이드](docs/03_github_student_pack.md) | 신청 방법, 배포 옵션 비교, 도메인 연결 |
 | [04 아키텍처 & API 명세](docs/04_architecture.md) | 구조도, 디렉터리, 엔드포인트, 환경변수 |
 | [05 모델링 리포트](docs/05_modeling.md) | 레이블 설계, 튜닝, 평가, SHAP 해석 |
-| [06 중간 발표 자료](docs/06_presentation.md) | 슬라이드 구성안, 발표 대본, 예상 질문 |
+| [06 중간 발표 자료](docs/06_presentation.md) | 슬라이드 구성안, 발표 대본, 예상 질문 · [PPT](docs/presentation/biz-risk-predictor_midterm.pptx) |
 | [07 개발 일지](docs/07_devlog.md) | 날짜별 작업, 의사결정 기록, 트러블슈팅 |
 
 ## 🗺 로드맵
