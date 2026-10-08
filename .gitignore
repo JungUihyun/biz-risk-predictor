@@ -22,3 +22,6 @@ node_modules/
 
 # Claude Code 로컬 설정
 .claude/
+
+# Office 임시 잠금 파일
+~$*
