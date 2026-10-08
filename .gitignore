@@ -1,0 +1,24 @@
+# Python
+__pycache__/
+*.pyc
+.venv
+*.nosync
+venv
+.ipynb_checkpoints/
+.env
+
+# 데이터·모델 산출물 (용량이 크므로 커밋하지 않음)
+data/raw/*
+data/processed/*
+!data/**/.gitkeep
+ml/artifacts/*
+!ml/artifacts/.gitkeep
+
+# Node
+node_modules/
+.next/
+
+.DS_Store
+
+# Claude Code 로컬 설정
+.claude/
