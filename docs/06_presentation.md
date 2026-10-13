@@ -1,6 +1,6 @@
 # 중간 발표 자료 (슬라이드 구성안)
 
-> 📎 **PPT 파일: [presentation/biz-risk-predictor_midterm.pptx](presentation/biz-risk-predictor_midterm.pptx)** (7장, 발표자 노트에 대본 포함)
+> 📎 **PPT 파일: [presentation/biz-risk-predictor_mid.pptx](presentation/biz-risk-predictor_mid.pptx)** (7장, 발표자 노트에 대본 포함)
 > 디자인: 미니멀 화이트 템플릿 스타일 · 색상 #FFFFFF / #333333 · 글꼴 Pretendard · 도형 모서리 반경 30px
 
 ---
