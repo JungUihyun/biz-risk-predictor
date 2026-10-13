@@ -109,7 +109,6 @@ npm run dev
 | [05 모델링 리포트](docs/05_modeling.md) | 레이블 설계, 튜닝, 평가, SHAP 해석 |
 | [06 중간 발표 자료](docs/06_presentation.md) | 슬라이드 구성안, 예상 질문 · [PPT](docs/presentation/biz-risk-predictor_mid.pptx) (데이터 확보·형식·계획 중심) |
 | [07 개발 일지](docs/07_devlog.md) | 날짜별 작업, 의사결정 기록, 트러블슈팅 |
-| [08 중간 발표 대본 & 예상 질문](docs/08_midterm_script.md) | 슬라이드별 대본(약 6분), 예상 질문 25개와 상세 답변 |
 
 ## 🗺 로드맵
 

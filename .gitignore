@@ -25,3 +25,6 @@ node_modules/
 
 # Office 임시 잠금 파일
 ~$*
+
+# 개인 발표 준비 자료 (대본·예상 질문) — GitHub에 올리지 않음
+docs/08_midterm_script.md
