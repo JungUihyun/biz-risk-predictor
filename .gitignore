@@ -28,3 +28,5 @@ node_modules/
 
 # 개인 발표 준비 자료 (대본·예상 질문) — GitHub에 올리지 않음
 docs/08_midterm_script.md
+# 발표자 노트(대본)가 들어 있는 작업용 PPT — GitHub에는 노트를 비운 _public 사본만 올림
+docs/presentation/biz-risk-predictor_mid.pptx
