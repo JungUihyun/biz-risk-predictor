@@ -79,7 +79,8 @@ def build_dataset() -> tuple[pd.DataFrame, pd.DataFrame]:
     df["qidx"] = quarter_index(df["quarter"])
 
     # 파생 피처
-    df["sales_per_store"] = df["sales_amount"] / df["store_count"].replace(0, np.nan)
+    # 추정매출은 일반+프랜차이즈 전체(= 유사업종 점포)의 합계이므로 같은 범위의 점포 수로 나눈다
+    df["sales_per_store"] = df["sales_amount"] / df["similar_store_count"].replace(0, np.nan)
     df["pop_per_store"] = df["floating_pop"] / df["similar_store_count"].replace(0, np.nan)
     df = add_qoq(df, "store_count", "store_count_qoq")
     df = add_qoq(df, "sales_amount", "sales_qoq")

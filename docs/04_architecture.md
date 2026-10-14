@@ -79,7 +79,7 @@ biz-risk-predictor/
 해당 업종의 모든 행정동 위험도를 반환합니다. (Top 10 목록과 향후 지도 표시에 사용)
 
 ```json
-[{ "dong_code": "11470611", "dong_name": "신월7동", "probability": 0.6612, "level": "위험" }]
+[{ "dong_code": "11470611", "dong_name": "신월7동", "probability": 0.6437, "level": "위험" }]
 ```
 
 ### `GET /diagnose?dong_code=11470611&industry_code=CS100010`
@@ -88,13 +88,13 @@ biz-risk-predictor/
 {
   "quarter": "20262",
   "gu_name": "양천구", "dong_name": "신월7동", "industry_name": "커피-음료",
-  "probability": 0.6612, "level": "위험", "base_value": 0.4999,
+  "probability": 0.6437, "level": "위험", "base_value": 0.4999,
   "contributions": [
-    { "feature": "open_rate", "label": "개업률", "value": 7.0, "shap": 0.0602 },
-    { "feature": "similar_store_count", "label": "유사업종 점포 수", "value": 14.0, "shap": 0.0459 }
+    { "feature": "open_rate", "label": "개업률", "value": 7.0, "shap": 0.0588 },
+    { "feature": "similar_store_count", "label": "유사업종 점포 수", "value": 14.0, "shap": 0.0461 }
   ],
   "advice": [
-    { "feature": "open_rate", "label": "개업률", "shap": 0.0602,
+    { "feature": "open_rate", "label": "개업률", "shap": 0.0588,
       "finding": "신규 개업이 많아 경쟁이 빠르게 늘고 있습니다.",
       "action": "신규 경쟁점 대비 차별화 요소를 미리 준비하세요." }
   ]

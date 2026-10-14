@@ -58,7 +58,7 @@ v1 기획의 예시 코드는 같은 분기 폐업률로 레이블을 만들면�
 | 모델 | 탐색 공간 | 최적 파라미터 |
 | --- | --- | --- |
 | DecisionTreeClassifier (gini) | max_depth {4,6,8,12} × min_samples_split {20,50,100} × min_samples_leaf {10,30,50} × class_weight {None, balanced} | depth 6, split 20, leaf 50, class_weight None |
-| RandomForestClassifier (200 trees, `n_jobs=-1`) | max_depth {8,12,16} × min_samples_split {20,50} × min_samples_leaf {10,30} × class_weight {None, balanced} | depth 12, split 50, leaf 10, **class_weight balanced** |
+| RandomForestClassifier (200 trees, `n_jobs=-1`) | max_depth {8,12,16} × min_samples_split {20,50} × min_samples_leaf {10,30} × class_weight {None, balanced} | depth 12, split 20, leaf 30, **class_weight balanced** |
 
 - `GridSearchCV(cv=StratifiedKFold(5), scoring="roc_auc")`. 튜닝은 학습셋에서 5만 건을 샘플링해 진행하고, 최적 파라미터로 학습셋 전체(35.7만 건)를 다시 학습했습니다.
 
@@ -70,14 +70,14 @@ v1 기획의 예시 코드는 같은 분기 폐업률로 레이블을 만들면�
 | --- | --- | --- | --- | --- | --- | --- |
 | 베이스라인 (현재 분기 폐업률만 사용) | – | 0.558 | – | – | – | – |
 | Decision Tree | 0.724 | 0.722 | 0.754 | 0.573 | 0.264 | 0.361 |
-| **Random Forest** | **0.736** | **0.734** | 0.695 | 0.444 | **0.627** | **0.520** |
+| **Random Forest** | **0.736** | **0.734** | 0.695 | 0.443 | **0.627** | **0.520** |
 
 혼동행렬 (Random Forest, threshold 0.5)
 
 | | 예측 0 | 예측 1 |
 | --- | --- | --- |
-| 실제 0 | 44,396 | 17,294 |
-| 실제 1 | 8,226 | **13,811** |
+| 실제 0 | 44,339 | 17,351 |
+| 실제 1 | 8,213 | **13,824** |
 
 **해석**
 - "이번 분기에 폐업이 많았으면 다음 분기에도 많다"는 단순 규칙(AUC 0.558)보다 랜덤 포레스트가 **AUC +0.18** 높습니다. 여러 상권 지표를 함께 보는 것이 의미 있다는 뜻입니다.
@@ -98,7 +98,7 @@ v1 기획의 예시 코드는 같은 분기 폐업률로 레이블을 만들면�
 | --- | --- |
 | ![beeswarm](images/shap_beeswarm.png) | ![importance](images/importance_vs_shap.png) |
 
-평균 |SHAP| 상위 요인: **유사업종 점포 수 > 점포 수 > 개업률 > 업종(외식업) > 점포당 유동인구 > 프랜차이즈 비율**
+평균 |SHAP| 상위 요인: **유사업종 점포 수 > 점포 수 > 개업률 > 점포당 유동인구 > 업종(외식업) > 프랜차이즈 비율**
 
 - **점포 수가 많을수록 위험도가 올라갑니다.** 경쟁 과밀 효과일 수도 있지만, **레이블 정의에서 생긴 편향**일 가능성이 큽니다. 서비스·소매업은 "폐업 1건 이상"이 고위험인데, 점포가 많을수록 그중 1곳이라도 폐업할 확률이 자연히 높아지기 때문입니다. → §7에서 개선 예정
 - **개업률이 높을수록** 위험이 올라갑니다. 신규 진입이 많은 상권은 경쟁이 심해지고 회전율이 높습니다.
@@ -109,7 +109,7 @@ v1 기획의 예시 코드는 같은 분기 폐업률로 레이블을 만들면�
 ### 6.3 개별 해석 (Waterfall)
 ![waterfall](images/waterfall_example.png)
 
-웹 서비스의 진단 화면은 이 Waterfall을 Recharts로 다시 그리고, 위험도를 높인 상위 3개 요인을 진단 문장으로 바꿔 보여줍니다. (예: 양천구 신월7동 · 커피-음료 → 개업률 +0.060, 유사업종 점포 수 +0.046, 프랜차이즈 비율 +0.034)
+웹 서비스의 진단 화면은 이 Waterfall을 Recharts로 다시 그리고, 위험도를 높인 상위 3개 요인을 진단 문장으로 바꿔 보여줍니다. (예: 양천구 신월7동 · 커피-음료 → 위험도 64.4%, 개업률 +0.059, 유사업종 점포 수 +0.046, 프랜차이즈 비율 +0.032)
 
 ---
 
