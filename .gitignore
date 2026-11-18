@@ -32,3 +32,12 @@ docs/08_midterm_script.md
 docs/presentation/biz-risk-predictor_mid.pptx
 docs/presentation/중간발표_202411523_정의현.pptx
 docs/presentation/중간발표2_202411523_정의현.pptx
+
+# 개인 디자인 자료 (로컬 전용)
+docs/design/
+
+# 도구가 자동 생성하는 파일 (ruflo/claude-flow 플러그인, R)
+.claude-flow/
+.swarm/
+ruvector.db
+.Rhistory
