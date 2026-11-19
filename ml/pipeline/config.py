@@ -51,11 +51,20 @@ FEATURES = {
     "floating_pop": "유동인구",
     "pop_per_store": "점포당 유동인구",
     "weekend_pop_ratio": "주말 유동인구 비중",
+    # 거시경제 (한국은행 ECOS, 분기별 전국 값 — 같은 분기의 모든 행에 동일하게 붙는다)
+    "gdp_growth": "GDP 성장률",
+    "consumption_growth": "민간소비 증감률",
+    "cpi_yoy": "소비자물가 상승률",
+    "base_rate": "기준금리",
+    "consumer_sentiment": "소비자심리지수",
     "grp_CS1": "업종: 외식업",
     "grp_CS2": "업종: 서비스업",
     "grp_CS3": "업종: 소매업",
 }
 FEATURE_COLS = list(FEATURES.keys())
+MACRO_COLS = ["gdp_growth", "consumption_growth", "cpi_yoy", "base_rate", "consumer_sentiment"]
+# 물가 상승률(전년 동기 대비)을 2021Q1부터 계산하려면 1년 앞선 2020Q1부터 받아야 한다
+MACRO_START_QUARTER = "2020Q1"
 TARGET_COL = "risk_label"
 
 # 서울시 25개 자치구 (행정동코드 앞 5자리)

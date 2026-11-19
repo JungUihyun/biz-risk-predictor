@@ -6,6 +6,7 @@
 flowchart LR
     subgraph Data["데이터 (오프라인)"]
         A[서울 열린데이터광장<br/>Open API] -->|collect.py| B[(data/raw<br/>CSV)]
+        K[한국은행 ECOS<br/>Open API] -->|collect_macro.py| B
         M[make_mock.py<br/>임시 데이터] -.-> B
         B -->|preprocess.py| C[(data/processed<br/>parquet)]
         C -->|train.py| D[(ml/artifacts<br/>model · meta · latest)]
@@ -33,9 +34,11 @@ biz-risk-predictor/
 │   ├── pipeline/
 │   │   ├── config.py            # 경로, 피처 정의(한글 라벨), 레이블·분할·위험구간 설정
 │   │   ├── collect.py           # Open API 페이지네이션 수집 (1,000건 단위)
+│   │   ├── collect_macro.py     # 한국은행 ECOS 분기 거시경제 지표 수집
 │   │   ├── make_mock.py         # API와 같은 스키마의 임시 데이터 생성
 │   │   ├── preprocess.py        # 병합, 결측치, 파생 피처, t+1 레이블 원천
 │   │   ├── train.py             # 시간 분할, GridSearchCV, 평가, 아티팩트 저장
+│   │   ├── ablation_macro.py    # 거시경제 피처 추가 전후 비교 실험
 │   │   └── explain.py           # SHAP 가법성 검증, 시각화
 │   ├── notebooks/01_eda_modeling.ipynb
 │   └── artifacts/               # 학습 산출물 (git 제외)
@@ -118,6 +121,7 @@ biz-risk-predictor/
 | 위치 | 변수 | 설명 |
 | --- | --- | --- |
 | `ml/.env` | `SEOUL_API_KEY` | 서울 열린데이터광장 일반 인증키 |
+| `ml/.env` | `ECOS_API_KEY` | 한국은행 ECOS 인증키 (선택, 없으면 공개 테스트 키 `sample`) |
 | `api` | `ARTIFACT_DIR` | 모델 아티팩트 경로 (기본값 `../ml/artifacts`) |
 | `api` | `ALLOWED_ORIGINS` | CORS 허용 도메인, 쉼표로 구분 (기본값 `http://localhost:3000`) |
 | `web/.env.local` | `ML_API_URL` | FastAPI 주소. 비워두면 목업 모드 |

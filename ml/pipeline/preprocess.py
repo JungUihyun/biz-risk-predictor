@@ -10,13 +10,21 @@
 import numpy as np
 import pandas as pd
 
-from .config import FEATURE_COLS, INDUSTRY_GROUPS, KEY_COLS, MIN_STORES, PROCESSED_DIR, RAW_DIR
+from .config import FEATURE_COLS, INDUSTRY_GROUPS, KEY_COLS, MACRO_COLS, MIN_STORES, PROCESSED_DIR, RAW_DIR
 
 
 def quarter_index(code: pd.Series) -> pd.Series:
     """'20241' → 연속 정수 인덱스 (분기 간 차이 계산용)."""
     code = code.astype(int)
     return (code // 10) * 4 + (code % 10) - 1
+
+
+def load_macro() -> pd.DataFrame:
+    """분기별 거시경제 지표 (collect_macro.py가 만든 data/raw/macro.csv)."""
+    path = RAW_DIR / "macro.csv"
+    if not path.exists():
+        raise SystemExit("data/raw/macro.csv가 없습니다. 먼저 `python -m pipeline.collect_macro`를 실행하세요.")
+    return pd.read_csv(path, dtype={"quarter": str})[["quarter", *MACRO_COLS]]
 
 
 def load_raw() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
@@ -76,6 +84,10 @@ def build_dataset() -> tuple[pd.DataFrame, pd.DataFrame]:
     df = build_stores(stores)
     df = df.merge(build_sales(sales), on=KEY_COLS, how="left")
     df = df.merge(build_flpop(flpop), on=["quarter", "dong_code"], how="left")
+    # 거시경제 지표는 분기마다 하나의 값(전국)이므로 분기 기준으로 모든 행에 붙인다
+    df = df.merge(load_macro(), on="quarter", how="left")
+    missing_q = sorted(df.loc[df[MACRO_COLS].isna().any(axis=1), "quarter"].unique())
+    assert not missing_q, f"거시경제 지표가 없는 분기: {missing_q} (collect_macro.py를 다시 실행하세요)"
     df["qidx"] = quarter_index(df["quarter"])
 
     # 파생 피처

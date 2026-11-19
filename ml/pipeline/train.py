@@ -104,9 +104,16 @@ def main() -> None:
     print(f"베이스라인(현재 폐업률만 사용) Test AUC: {results['baseline_close_rate']['test']['roc_auc']:.3f}")
     for name, (estimator, grid) in PARAM_GRIDS.items():
         print(f"\n=== {name} GridSearchCV ===")
+        # 중첩 병렬(GridSearch × 포레스트)은 메모리를 많이 써서 작업자 프로세스가 죽을 수 있다
+        # → 튜닝 중에는 GridSearch만 병렬로 돌리고, 최종 학습에서만 포레스트를 병렬로 돌린다
+        if "n_jobs" in estimator.get_params():
+            estimator = estimator.set_params(n_jobs=1)
         search = GridSearchCV(estimator, grid, scoring="roc_auc", cv=cv, n_jobs=-1, verbose=1)
         search.fit(X_train[tune_idx], y_train[tune_idx])
-        model = search.best_estimator_.fit(X_train, y_train)  # 최적 파라미터로 전체 재학습
+        model = search.best_estimator_
+        if "n_jobs" in model.get_params():
+            model.set_params(n_jobs=-1)
+        model.fit(X_train, y_train)  # 최적 파라미터로 전체 재학습
         metrics = evaluate(model, X_test, y_test)
         results[name] = {"best_params": search.best_params_, "cv_auc": search.best_score_, "test": metrics}
         best_models[name] = model
