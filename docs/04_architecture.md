@@ -6,7 +6,7 @@
 flowchart LR
     subgraph Data["데이터 (오프라인)"]
         A[서울 열린데이터광장<br/>Open API] -->|collect.py| B[(data/raw<br/>CSV)]
-        K[한국은행 ECOS<br/>Open API] -->|collect_macro.py| B
+        K[한국은행 ECOS<br/>Open API] -.->|collect_macro.py<br/>비교 실험용| B
         M[make_mock.py<br/>임시 데이터] -.-> B
         B -->|preprocess.py| C[(data/processed<br/>parquet)]
         C -->|train.py| D[(ml/artifacts<br/>model · meta · latest)]
@@ -34,11 +34,11 @@ biz-risk-predictor/
 │   ├── pipeline/
 │   │   ├── config.py            # 경로, 피처 정의(한글 라벨), 레이블·분할·위험구간 설정
 │   │   ├── collect.py           # Open API 페이지네이션 수집 (1,000건 단위)
-│   │   ├── collect_macro.py     # 한국은행 ECOS 분기 거시경제 지표 수집
+│   │   ├── collect_macro.py     # 한국은행 ECOS 분기 거시경제 지표 수집 (비교 실험용, 모델 입력 아님)
 │   │   ├── make_mock.py         # API와 같은 스키마의 임시 데이터 생성
 │   │   ├── preprocess.py        # 병합, 결측치, 파생 피처, t+1 레이블 원천
 │   │   ├── train.py             # 시간 분할, GridSearchCV, 평가, 아티팩트 저장
-│   │   ├── ablation_macro.py    # 거시경제 피처 추가 전후 비교 실험
+│   │   ├── ablation_macro.py    # 거시경제 피처 넣은/안 넣은 모델 비교 → 안 넣기로 결정
 │   │   └── explain.py           # SHAP 가법성 검증, 시각화
 │   ├── notebooks/01_eda_modeling.ipynb
 │   └── artifacts/               # 학습 산출물 (git 제외)

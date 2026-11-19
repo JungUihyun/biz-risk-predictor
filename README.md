@@ -78,7 +78,7 @@ python -m ipykernel install --user --name biz-risk-predictor   # 노트북 커�
 cd ml
 cp .env.example .env              # SEOUL_API_KEY 입력 (키 없이 시험하려면 python -m pipeline.make_mock)
 python -m pipeline.collect
-python -m pipeline.collect_macro   # 한국은행 ECOS 거시지표 (키 없으면 공개 sample 키 사용)
+python -m pipeline.collect_macro   # 한국은행 ECOS 거시지표, 비교 실험용 (키 없으면 공개 sample 키 사용)
 python -m pipeline.preprocess
 python -m pipeline.train
 python -m pipeline.explain
@@ -118,7 +118,7 @@ npm run dev
 - [x] FastAPI + Next.js 프로토타입
 - [x] 인증키 발급 및 실데이터 수집 (점포 77.5만 · 매출 37.6만 · 유동인구 9,350행)
 - [x] 실데이터 1차 모델 (RF Test AUC 0.734) 및 SHAP 해석
-- [x] 거시경제 지표 5개(ECOS) 추가와 효과 비교 → 단순 결합으로는 개선 없음 (RF AUC 0.731, [05 모델링 §5.1](docs/05_modeling.md))
+- [x] 거시경제 지표 5개(ECOS) 넣은 모델과 안 넣은 모델 비교 → 안 넣은 쪽이 나아 **최종 모델에서 제외** ([05 모델링 §5.1](docs/05_modeling.md))
 - [ ] 레이블 재설계(점포 수 편향 완화), 확률 보정, Recall 중심 threshold (8~10주차)
 - [ ] 배포: Vercel + Heroku + 커스텀 도메인 (14주차)
 - [ ] 확장: 행정동 지도 시각화, 상권변화지표·상주/직장인구 피처

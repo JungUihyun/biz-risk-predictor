@@ -2,6 +2,7 @@
 
 train.py가 찾은 랜덤 포레스트 최적 파라미터를 고정하고, 피처 묶음만 바꿔서
 같은 시간 기준 분할(학습 2021Q1~2025Q1 → 테스트 2025Q2~2026Q1)로 성능을 비교한다.
+결과: 거시지표를 넣을수록 테스트 성능이 조금씩 떨어져 최종 모델에서는 빼기로 했다 (config.MACRO_FEATURES).
 
 사용법 (ml/ 디렉터리에서, train.py 실행 후):
     python -m pipeline.ablation_macro
@@ -16,12 +17,12 @@ from sklearn.metrics import f1_score, recall_score, roc_auc_score
 from .config import ARTIFACT_DIR, FEATURE_COLS, MACRO_COLS, PROCESSED_DIR, TARGET_COL
 from .train import SEED, split_and_label
 
-BASE_COLS = [c for c in FEATURE_COLS if c not in MACRO_COLS]
+BASE_COLS = FEATURE_COLS  # 최종 모델 피처 (상권 17개)
 FEATURE_SETS = {
     "상권 피처만 (17개)": BASE_COLS,
     "+ GDP 성장률": BASE_COLS + ["gdp_growth"],
-    "+ GDP · 민간소비": BASE_COLS + ["gdp_growth", "consumption_growth"],
-    "+ 거시지표 5개 전체 (22개)": FEATURE_COLS,
+    "+ GDP, 민간소비": BASE_COLS + ["gdp_growth", "consumption_growth"],
+    "+ 거시지표 5개 전체 (22개)": BASE_COLS + MACRO_COLS,
 }
 
 
